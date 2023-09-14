@@ -1,0 +1,23 @@
+version: '3'
+services:
+  s1:
+    build:
+      context: ./s1/
+      dockerfile: Dockerfile 
+    ports:
+      - "8081:8081"
+  s2:
+    build:
+      context: ./s2/
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+  s3:
+    build:
+      context: ./s3/
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    environment:
+      S1_URL: "http://localhost:8081"  # URL of S1 service Example URL http://s1.ServerIP:PortNo/route
+      S2_URL: "http://localhost:8082"  # URL of S2 service Example URL http://s2.ServerIP:PortNo/route
