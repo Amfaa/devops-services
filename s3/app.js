@@ -30,7 +30,33 @@ app.post("/add-sub", (req, res) => {
   //////////////////////////////////////
   // Your logic to call S1 and S2 services to get the addition and subtraction
   //////////////////////////////////////
+try {
+    // Replace these URLs with the actual endpoints of your S1 and S2 services
+    const s1Url = "http://localhost:8081/add"; // Example URL http://s1.ServerIP:PortNo/route
+    const s2Url = "http://localhost:8082/sub"; // Example URL http://s2.ServerIP:PortNo/route
 
+    // Make HTTP requests to S1 and S2 services
+    const responseS1 = await axios.get(s1Url, {
+      params: {
+        a: a,
+        b: b,
+      },
+    });
+
+    const responseS2 = await axios.get(s2Url, {
+      params: {
+        a: a,
+        b: b,
+      },
+    });
+
+    // Calculate addition and subtraction based on the responses
+    const additionResult = responseS1.data.result;
+    const subtractionResult = responseS2.data.result;
+
+    res.json({
+      sum: additionResult,
+      difference: subtractionResult,
 });
 
 /** 404 error */
