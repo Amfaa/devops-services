@@ -1,0 +1,29 @@
+name: Bump Node.js Version
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  bump-node-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14  # You can set this to the desired Node.js version
+
+      - name: Bump Node.js version
+        run: |
+          # Check if the current Node.js version matches the desired version
+          CURRENT_NODE_VERSION=$(node -v)
+          DESIRED_NODE_VERSION="v14.0.0"  # Change this to your desired version
+
+          if [ "$CURRENT_NODE_VERSION" != "$DESIRED_NODE_VERSION" ]; then
+            nvm install "$DESIRED_NODE_VERSION"
+          fi
