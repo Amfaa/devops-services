@@ -12,12 +12,26 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8082:8082"
+    networks:
+      - mynetwork
   s3:
     build:
       context: ./s3/
       dockerfile: Dockerfile
     ports:
       - "8083:8083"
+    networks:
+      - mynetwork
     environment:
-      S1_URL: "http://localhost:8081"  # URL of S1 service Example URL http://s1.ServerIP:PortNo/route
-      S2_URL: "http://localhost:8082"  # URL of S2 service Example URL http://s2.ServerIP:PortNo/route
+
+     #via extrnal host nw
+      S1_URL: "http://172.22.96.1:8081/add"  # Use the service name as the hostname
+      S2_URL: "http://172.22.96.1:8082/sub"  # Use the service name as the hostname
+      
+
+      # via docker network
+      #S1_URL: "http://s1:8081/add"  # Use the service name as the hostname
+      #S2_URL: "http://s2:8082/sub"  # Use the service name as the hostname
+
+networks:
+  mynetwork:
